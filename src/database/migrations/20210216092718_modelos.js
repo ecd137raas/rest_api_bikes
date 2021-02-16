@@ -2,10 +2,12 @@
 exports.up = function(knex) {
     return knex.schema.createTable("modelos", function(table) {
         table.increments();
-        table.string("nome").notNullable();
-        table.string("descricao").notNullable();
+        table.integer('id_marcas').notNullable();
+        table.string("nome", 50).notNullable();
+        table.string("descricao", 100).notNullable();
+        table.string("foto", 50);
         table.string("fichatecnica");
-        table.timestamp("datacriacao").notNullable();
+        table.datetime("datacriacao").notNullable();
     });
 }
 
