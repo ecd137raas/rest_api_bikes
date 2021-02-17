@@ -2,40 +2,46 @@ var connection = require ('../database/connection');
 
 module.exports = {
     async index(req, res){
-        const nome = req.params.nome;
-        if(nome){
-            const marcas = await connection('marcas').where('nome', nome);
-            if(marcas!=''){
-                return res.json(marcas);
+        const id = req.params.id;
+        if(id){
+            const modelos = await connection('modelos').where('id', id);
+            if(modelos!=''){
+                return res.json(modelos);
             } else {
                 return res.status(204).send({msg: 'Não há registros'})
             }   
         } else {
-            const marcas = await connection('marcas').select('*'); 
-            return res.json(marcas);        
+            const modelos = await connection('modelos').select('*'); 
+            return res.json(modelos);        
         }
     },
     async create(req, res){
-        const {nome, descricao, datacriacao} = req.body;
+        const {id_marcas, nome, descricao, foto, fichatecnica, datacriacao} = req.body;
         try{
-            await connection('marcas').insert({
+            await connection('modelos').insert({
+                id_marcas,
                 nome,
                 descricao,
+                foto,
+                fichatecnica,
                 datacriacao
             })
             return res.status(200).send({msg: 'Registro incluído com sucesso!'});
         
         } catch(err){
-            res.status(400).send({ error: 'Falha no cadastramento'});
+            res.status(400).send({ error: 'Falha no cadastramento' + err});
         }
     },
     async update(req, res){
-        const {nome, descricao} = req.body;
+        const { id_marcas, nome, descricao, foto, fichatecnica } = req.body;
         const id = req.params.id;
         try{
-            await connection('marcas').where('id', id).update({
+            await connection('modelos').where('id', id).update({
+                id_marcas,
                 nome,
-                descricao
+                descricao,
+                foto,
+                fichatecnica
             })
             return res.status(200).send({msg: 'Registro alterado com sucesso!'});
         
@@ -46,7 +52,7 @@ module.exports = {
     async delete(req, res){
         const id = req.params.id;
         try{
-            await connection('marcas').where('id', id).del();
+            await connection('modelos').where('id', id).del();
             return res.status(200).send({msg: 'Registro excluído com sucesso!'});
         
         } catch(err){
