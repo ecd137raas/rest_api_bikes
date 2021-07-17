@@ -1,7 +1,4 @@
-# Projeto de estudo APP Motos
+# Projeto de estudo Rest API Bikes
 Dependencias.
-Express, Knex e postgre
-
-Projeto utilizando nodeJS com Express, Knex e banco de dados postgre.
-Diretório src possui controller e database, onde database concentra as configurações do knex.
+Express, postgre e Jest
 
